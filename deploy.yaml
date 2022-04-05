@@ -1,0 +1,11 @@
+apiVersion: apps.openliberty.io/v1beta2
+kind: OpenLibertyApplication
+metadata:
+  name: dev-demo
+  labels:
+    name: dev-demo
+spec:
+  applicationImage: devex/dev-demo-imagestream:1.0-SNAPSHOT
+  service:
+    port: 9080
+  expose: true

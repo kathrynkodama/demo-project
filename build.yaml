@@ -1,0 +1,29 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: "build-template"
+  annotations:
+    description: "Build template for the dev-demo service"
+    tags: "build"
+objects:
+  - apiVersion: v1
+    kind: ImageStream
+    metadata:
+      name: "dev-demo-imagestream"
+      labels:
+        name: "dev-demo"
+  - apiVersion: v1
+    kind: BuildConfig
+    metadata:
+      name: "dev-demo-buildconfig"
+      labels:
+        name: "dev-demo"
+    spec:
+      source:
+        type: Binary
+      strategy:
+        type: Docker
+      output:
+        to:
+          kind: ImageStreamTag
+          name: "dev-demo-imagestream:1.0-SNAPSHOT"
