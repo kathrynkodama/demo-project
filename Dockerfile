@@ -1,6 +1,14 @@
-FROM icr.io/appcafe/open-liberty:kernel-slim-java11-openj9-ubi
+# Install Maven and copy project for compilation
+FROM maven:latest as builder
 
-RUN /root/apache-maven-3.8.5/bin/mvn -f pom.xml clean package 
+COPY pom.xml /usr/local/pom.xml
+COPY src /usr/local/
+WORKDIR /usr/local/
+
+RUN mvn clean package
+
+# Deploy OL app
+FROM icr.io/appcafe/open-liberty:kernel-slim-java11-openj9-ubi
 
 COPY --chown=1001:0 /src/main/liberty/config /config
 
